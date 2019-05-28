@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Timescale</title>
+    <style>
+        .pending {
+            fill: #e74c3c;
+        }
+
+        .bar {
+            fill: #2ecc71;
+        }
+
+        .bar:hover,
+        .pending:hover {
+            fill: #3498db;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .legend {
+            padding: 5px;
+            font: 16px sans-serif;
+            background: yellow;
+            box-shadow: 2px 2px 1px #888;
+        }
+
+        .tooltip {
+            background: #eee;
+            box-shadow: 0 0 5px #999999;
+            color: #333;
+            font-size: 12px;
+            left: 130px;
+            padding: 10px;
+            position: absolute;
+            text-align: center;
+            top: 95px;
+            z-index: 10;
+            display: block;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chart"></div>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
