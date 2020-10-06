@@ -1,0 +1,16 @@
+{
+  "name": "meanapp",
+  "version": "1.0.0",
+  "description": "sample nodejs, express, mongodb application for Restfull Api",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Imran Zahoor",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
