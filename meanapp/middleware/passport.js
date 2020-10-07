@@ -1,15 +1,24 @@
-const { options } = require("../routes")
+const passport = require("passport")
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const User = require("../models/User");
 
-const JwtStrategy = require("pasport-jwt").Strategy()
-const ExtractJwt = require('passport-jwt').ExtractJwt
 
-const options = {
+const option = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'PUB_KEY',
-    algorithms: ['RS256']
+    secretOrKey: '12345678'
 };
-module.exports = (pasport) => {
-    pasport.use(new JwtStrategy(options, (jwt_payload, done) => {
-        return done(null, { name: "imran", id: 12345 })
-    }))
-}
+
+passport.use(new JwtStrategy(option, async (jwt_payload, done) => {
+    try {
+        
+        const user = await User.findOne({email: jwt_payload.email});        
+        if (!user) {
+            return done(null, false);
+        }
+        done(null, user);
+    } catch (error) {
+        done(error, false);
+    }
+
+}))
