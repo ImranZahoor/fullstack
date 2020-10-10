@@ -1,0 +1,15 @@
+GET http://localhost:3000/auth/login
+
+###
+GET http://localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImltcmFuLXphaG9vckBvdXRsb29rLmNvbSIsImlhdCI6MTYwMjMxMDY0NiwiZXhwIjoxNjAzMzEwNjQ2fQ.xk8ARerchZMwmCHg0VYIOWdkPzKdCWMuOcRQVBbqWuk
+
+###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImltcmFuLXphaG9vckBvdXRsb29rLmNvbSIsImlhdCI6MTYwMjMwMjM2OCwiZXhwIjoxNjAzMzAyMzY4fQ.sphQzRd4bMrY5O5R4VsBWR3yGpo3Ck0ymE8unOSzsnc
+
+{
+    "email":"imran-zahoor@outlook.com",
+    "password":"admin1234"
+}
