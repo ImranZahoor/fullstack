@@ -13,3 +13,16 @@ Content-Type: application/json
     "email":"imran-zahoor@outlook.com",
     "password":"admin1234"
 }
+
+###
+POST http://localhost:3000/api/todo
+Content-Type: application/json
+
+{
+    "title":"complete authentication"
+ 
+}
+
+###
+PUT http://localhost:3000/api/todo/5f819321f72723714e18127c
+Content-Type: application/json
