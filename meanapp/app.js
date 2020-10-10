@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const passport = require("passport");
 const app = express();
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 
 // custom modules
 dotenv.config();
@@ -29,6 +30,7 @@ mongoose.connect(DB_STRING, {
 })
 
 // configure application
+app.use(morgan("dev"));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(passport.initialize());
