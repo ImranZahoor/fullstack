@@ -12,8 +12,7 @@ TodoSchema = new Schema({
         default: false
     },
     userId: {
-        type: mongoose.ObjectId,
-        // required: [true, 'todo user required']
+        type: mongoose.ObjectId,        
     },
     createdAt: {
         type: Date

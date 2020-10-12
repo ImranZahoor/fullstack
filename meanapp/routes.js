@@ -1,11 +1,12 @@
 const passport = require("passport");
+const permit = require("./middleware/permit");
 const AuthController = require("./controllers/Auth/AuthController");
 const HomeController = require("./controllers/HomeController");
 const TodoController = require("./controllers/TodoController");
 const UserController = require("./controllers/UserController");
 const router = require("express").Router();
 
-router.get('/', passport.authenticate('jwt', { session: false }), HomeController.index);
+router.get('/', passport.authenticate('jwt', { session: false }),permit.permit, HomeController.index);
 
 // api routes
 router.get('/api/user/create', UserController.store);

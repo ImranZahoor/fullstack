@@ -1,9 +1,8 @@
-@authToken=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImltcmFuLXphaG9vckBvdXRsb29rLmNvbSIsImlhdCI6MTYwMjQ4NTk5OSwiZXhwIjoxNjAyNDk1OTk5fQ.SDXSiDQJ9BX0ibGYdURuWRY038dLMxuqE2lkvp9GLpM
+@authToken=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjdkNjUwNDZlMTQyNmFlYzZjMGMxZGYiLCJpYXQiOjE2MDI0OTUzMTcsImV4cCI6MTYwMjUwNTMxN30.WgFnOSMkuBWsJ7MCL97PgvdzHOv3MYyZWM8tLmPqKRo
 @baseUrl = http://localhost:3000/
 ###
-POST {{baseUrl}}/auth/login
+POST {{baseUrl}}auth/login
 Content-Type: application/json
-
 {
     "email":"imran-zahoor@outlook.com",
     "password":"admin1234"
@@ -23,33 +22,34 @@ Authorization: {{authToken}}
 }
 
 ###
-GET {{baseUrl}}/api/todo
+GET {{baseUrl}}api/todo
 Content-Type: application/json
 Authorization: {{authToken}}
 ###
-GET {{baseUrl}}/api/todo/5f8403ca9433e531d26ca747
+GET {{baseUrl}}api/todo/5f8423baff68dc42cae92c0e
 Content-Type: application/json
 Authorization: {{authToken}}
 
 ###
-POST {{baseUrl}}/api/todo
+POST {{baseUrl}}api/todo
 Content-Type: application/json
 Authorization: {{authToken}}
 
 {
-    "title":"deploy jenkins solution" 
+    "title":"attach userid with todos" 
 }
 
 ###
-PUT {{baseUrl}}/api/todo/5f8403ca9433e531d26ca747
+PUT {{baseUrl}}api/todo/5f83f6a24b61b725abb06f51
 Content-Type: application/json
 Authorization: {{authToken}}
 
 {
+    "title":"attach user to todo",
     "completed":true
 }
 
 ###
-DELETE  {{baseUrl}}/api/todo/5f8403ca9433e531d26ca747
+DELETE  {{baseUrl}}api/todo/5f8423baff68dc42cae92c0e
 Content-Type: application/json
 Authorization: {{authToken}}

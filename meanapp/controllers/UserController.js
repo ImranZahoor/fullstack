@@ -1,6 +1,6 @@
 const User = require("../models/User");
 module.exports = {
-    index(req, res, next) {
+    async index(req, res, next) {
         try {
             const users = await User.find();
             if (!users || users.length == 0) {
@@ -12,7 +12,7 @@ module.exports = {
         }
     },
 
-    view(req, res, next) {
+    async view(req, res, next) {
         const id = req.params.Id;
 
         if (!id || id == "undefined") {
@@ -39,7 +39,7 @@ module.exports = {
             username,
             email,
             password
-        })        
+        });        
         user.save(err => {
             if (err) throw err;
             res.status(200).json({ message: "USER_CREATED" })

@@ -1,5 +1,5 @@
 const Todo = require("../models/Todo");
-const mongoose = require("mongoose");
+const Types = require("mongoose").Types;
 
 module.exports = {
     async index(req, res, next) {
@@ -21,7 +21,7 @@ module.exports = {
             return res.status(401).json({ message: 'TODO_INVALID_PARAM' })
         }
         try {
-            const _id = mongoose.Types.ObjectId(id);
+            const _id = Types.ObjectId(id);
             const todo = await Todo.find({ _id });
 
             if (!todo || todo == "undefined") {
@@ -35,11 +35,13 @@ module.exports = {
     },
 
     store(req, res, next) {
-        const { title } = req.body;
+        const { title, completed } = req.body;
+        const userId = Types.ObjectId(req.user);
         try {
             const todo = new Todo({
-                title: title,
-                completed: false
+                title,
+                userId,
+                completed
             });
             todo.save(err => {
                 if (err) throw err;
@@ -53,16 +55,16 @@ module.exports = {
 
     async update(req, res, next) {
         const id = req.params.Id;
-        const { completed } = req.body;
+        const { title,completed } = req.body;
 
         if (!id || id == "undefined") {
             return res.status(404).json({ message: 'TODO_INVALID_PARAM' })
         }
         try {
-            const _id = mongoose.Types.ObjectId(id)
+            const _id = Types.ObjectId(id)
             const todo = await Todo.findOneAndUpdate(
                 { _id },
-                { completed },
+                { title, completed },
                 { useFindAndModify: false }
             );
 
@@ -79,8 +81,8 @@ module.exports = {
     async delete(req, res, next) {
         const id = req.params.Id;
         try {
-            const _id = mongoose.Types.ObjectId(id)
-            const result = await Todo.deleteOne({ _id});
+            const _id = Types.ObjectId(id)
+            const result = await Todo.deleteOne({ _id });
 
             if (result.deletedCount > 0)
                 res.status(200).json({ message: "TODO_DELETED" });
