@@ -6,16 +6,17 @@ const secret = process.env.APP_SECRET;
 
 const option = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: secret
+    secretOrKey: secret,
+    passReqToCallback: true,
 };
 
-passport.use(new JwtStrategy(option, async (jwt_payload, done) => {
+passport.use(new JwtStrategy(option, async (req,jwt_payload, done) => {
     try {                
         const user = await User.findOne({email: jwt_payload.email});
         if (!user) {
             return done(null, false);
-        }
-        done(null, user);
+        }        
+        done(null, user._id);
     } catch (error) {
         done(error, false);
     }

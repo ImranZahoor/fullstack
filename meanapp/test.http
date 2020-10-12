@@ -1,13 +1,21 @@
-GET http://localhost:3000/auth/login
-
+@authToken=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImltcmFuLXphaG9vckBvdXRsb29rLmNvbSIsImlhdCI6MTYwMjQ4NTk5OSwiZXhwIjoxNjAyNDk1OTk5fQ.SDXSiDQJ9BX0ibGYdURuWRY038dLMxuqE2lkvp9GLpM
+@baseUrl = http://localhost:3000/
 ###
-GET http://localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImltcmFuLXphaG9vckBvdXRsb29rLmNvbSIsImlhdCI6MTYwMjMxMDY0NiwiZXhwIjoxNjAzMzEwNjQ2fQ.xk8ARerchZMwmCHg0VYIOWdkPzKdCWMuOcRQVBbqWuk
-
-###
-POST http://localhost:3000/auth/login
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImltcmFuLXphaG9vckBvdXRsb29rLmNvbSIsImlhdCI6MTYwMjMwMjM2OCwiZXhwIjoxNjAzMzAyMzY4fQ.sphQzRd4bMrY5O5R4VsBWR3yGpo3Ck0ymE8unOSzsnc
+
+{
+    "email":"imran-zahoor@outlook.com",
+    "password":"admin1234"
+}
+###
+GET {{baseUrl}}
+Authorization: {{authToken}}
+
+###
+POST {{baseUrl}}/auth/logout
+Content-Type: application/json
+Authorization: {{authToken}}
 
 {
     "email":"imran-zahoor@outlook.com",
@@ -15,14 +23,33 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/api/todo
+GET {{baseUrl}}/api/todo
 Content-Type: application/json
+Authorization: {{authToken}}
+###
+GET {{baseUrl}}/api/todo/5f8403ca9433e531d26ca747
+Content-Type: application/json
+Authorization: {{authToken}}
+
+###
+POST {{baseUrl}}/api/todo
+Content-Type: application/json
+Authorization: {{authToken}}
 
 {
-    "title":"complete authentication"
- 
+    "title":"deploy jenkins solution" 
 }
 
 ###
-PUT http://localhost:3000/api/todo/5f819321f72723714e18127c
+PUT {{baseUrl}}/api/todo/5f8403ca9433e531d26ca747
 Content-Type: application/json
+Authorization: {{authToken}}
+
+{
+    "completed":true
+}
+
+###
+DELETE  {{baseUrl}}/api/todo/5f8403ca9433e531d26ca747
+Content-Type: application/json
+Authorization: {{authToken}}

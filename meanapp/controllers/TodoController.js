@@ -2,44 +2,91 @@ const Todo = require("../models/Todo");
 const mongoose = require("mongoose");
 
 module.exports = {
-    index(req, res, next) {
-
+    async index(req, res, next) {
+        try {
+            const todos = await Todo.find();
+            if (!todos || todos.length == 0) {
+                return res.status(401).json({ message: 'TODO_NOT_FOUND' })
+            }
+            res.status(200).json({ todos });
+        } catch (error) {
+            return res.status(500).json({ error });
+        }
     },
-    view(req, res, next) {
 
+    async view(req, res, next) {
+        const id = req.params.Id;
+
+        if (!id || id == "undefined") {
+            return res.status(401).json({ message: 'TODO_INVALID_PARAM' })
+        }
+        try {
+            const _id = mongoose.Types.ObjectId(id);
+            const todo = await Todo.find({ _id });
+
+            if (!todo || todo == "undefined") {
+                return res.status(401).json({ message: 'TODO_NOT_FOUND' })
+            }
+
+            res.status(200).json({ todo });
+        } catch (error) {
+            return res.status(500).json({ error });
+        }
     },
+
     store(req, res, next) {
         const { title } = req.body;
+        try {
+            const todo = new Todo({
+                title: title,
+                completed: false
+            });
+            todo.save(err => {
+                if (err) throw err;
+                return res.status(200).json({ message: "TODO_CREATED" });
+            });
+        } catch (error) {
+            return res.status(500).json({ error });
+        }
 
-        const todo = new Todo({
-            title: title,
-            completed: false
-        });
-        todo.save(err => {
-            if (err) throw err;
-            return res.status(200).json({ message: "TODO_CREATED" });
-        });
     },
+
     async update(req, res, next) {
         const id = req.params.Id;
-        // console.log(id);
-        // const todo = await (await Todo.findById(mongoose.Types.ObjectId(id)));
+        const { completed } = req.body;
 
-        // if (!todo) return res.status(401).json({ message: "TODO_NOT_FOUND" });
+        if (!id || id == "undefined") {
+            return res.status(404).json({ message: 'TODO_INVALID_PARAM' })
+        }
+        try {
+            const _id = mongoose.Types.ObjectId(id)
+            const todo = await Todo.findOneAndUpdate(
+                { _id },
+                { completed },
+                { useFindAndModify: false }
+            );
 
-        const todo = await Todo.findOneAndUpdate(
-            { _id: mongoose.Types.ObjectId(id) },
-            { completed: true }
-        );
-
-        res.status(200).json({ todo });
-        // todo.findOneAndUpdate({ completed: true }, (err, todo) => {
-        //     if (!err) return res.status(400).json({ err });
-        //     res.status(200).json({ todo });
-        // });
+            if (todo.equals(null)) {
+                return res.status(404).json({ message: 'TODO_NOT_FOUND' })
+            }
+            res.status(200).json({ todo });
+        } catch (error) {
+            return res.status(422).json({ error });
+        }
 
     },
-    delete(req, res, next) {
 
+    async delete(req, res, next) {
+        const id = req.params.Id;
+        try {
+            const _id = mongoose.Types.ObjectId(id)
+            const result = await Todo.deleteOne({ _id});
+
+            if (result.deletedCount > 0)
+                res.status(200).json({ message: "TODO_DELETED" });
+
+        } catch (error) {
+            return res.status(500).json({ error });
+        }
     }
 }
