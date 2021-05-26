@@ -27,6 +27,25 @@ export default (state = initState, action) => {
                 error: action.payload.error
             }
             break;
+        case pageConstants.GET_ALL_PAGES_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            }
+            break;
+        case pageConstants.GET_ALL_PAGES_SUCCESS:
+            state = {
+                ...state,
+                loading: false
+            }
+            break;
+        case pageConstants.GET_ALL_PAGES_FAILURE:
+            state = {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            }
+            break;
     }
 
     return state;

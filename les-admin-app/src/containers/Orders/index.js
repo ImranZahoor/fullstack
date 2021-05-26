@@ -15,7 +15,7 @@ const Orders = (props) => {
   const order = useSelector((state) => state.order);
   const [type, setType] = useState("");
   const dispatch = useDispatch();
-
+  console.log("=======>" + order[0])
   const onOrderUpdate = (orderId) => {
     const payload = {
       orderId,
@@ -83,9 +83,8 @@ const Orders = (props) => {
             <div className="orderTrack">
               {orderItem.orderStatus.map((status) => (
                 <div
-                  className={`orderStatus ${
-                    status.isCompleted ? "active" : ""
-                  }`}
+                  className={`orderStatus ${status.isCompleted ? "active" : ""
+                    }`}
                 >
                   <div
                     className={`point ${status.isCompleted ? "active" : ""}`}

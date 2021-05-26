@@ -5,7 +5,7 @@ import Input from '../../components/UI/Input';
 import { Container, Row, Col } from 'react-bootstrap';
 import linearCategories from '../../helpers/linearCategories';
 import { useSelector, useDispatch } from 'react-redux';
-import { createPage } from '../../actions';
+import { createPage, getAllPages } from '../../actions';
 
 /**
 * @author
@@ -26,14 +26,14 @@ const NewPage = (props) => {
     const dispatch = useDispatch();
     const page = useSelector(state => state.page);
 
-
+    console.dir(page);
     useEffect(() => {
         setCategories(linearCategories(category.categories));
     }, [category]);
 
     useEffect(() => {
-        console.log(page);
-        if(!page.loading){
+        // console.log(page);
+        if (!page.loading) {
             setCreateModal(false);
             setTitle('');
             setCategoryId('');
@@ -62,7 +62,7 @@ const NewPage = (props) => {
     const submitPageForm = (e) => {
         //e.target.preventDefault();
 
-        if(title === ""){
+        if (title === "") {
             alert('Title is required');
             setCreateModal(false);
             return;
@@ -82,7 +82,7 @@ const NewPage = (props) => {
 
         dispatch(createPage(form));
 
-        
+
     }
 
     const renderCreatePageModal = () => {
@@ -108,7 +108,7 @@ const NewPage = (props) => {
                                     )
                                 }
                             </select> */}
-                            <Input 
+                            <Input
                                 type="select"
                                 value={categoryId}
                                 onChange={onCategoryChange}
@@ -141,8 +141,8 @@ const NewPage = (props) => {
                     </Row>
 
                     {
-                            banners.length > 0 ? 
-                            banners.map((banner, index) => 
+                        banners.length > 0 ?
+                            banners.map((banner, index) =>
                                 <Row key={index}>
                                     <Col>{banner.name}</Col>
                                 </Row>
@@ -151,8 +151,8 @@ const NewPage = (props) => {
                     <Row>
                         <Col>
                             <Input
-                                className="form-control" 
-                                type="file" 
+                                className="form-control"
+                                type="file"
                                 name="banners"
                                 onChange={handleBannerImages}
                             />
@@ -160,25 +160,25 @@ const NewPage = (props) => {
                     </Row>
 
                     {
-                            products.length > 0 ? 
-                            products.map((product, index) => 
+                        products.length > 0 ?
+                            products.map((product, index) =>
                                 <Row key={index}>
                                     <Col>{product.name}</Col>
                                 </Row>
                             ) : null
-                        }
+                    }
                     <Row>
                         <Col>
-                            <Input 
+                            <Input
                                 className="form-control"
-                                type="file" 
+                                type="file"
                                 name="products"
                                 onChange={handleProductImages}
                             />
                         </Col>
                     </Row>
 
-                    
+
 
                 </Container>
 
@@ -189,17 +189,18 @@ const NewPage = (props) => {
 
 
     return (
+        console.log("==========>" + page),
         <Layout sidebar>
             {
-                page.loading ? 
-                <p>Creating Page...please wait</p>
-                :
-                <>
-                    {renderCreatePageModal()}
-                    <button onClick={() => setCreateModal(true)}>Create Page</button>
-                </>
+                page.loading ?
+                    <p>Creating Page...please wait</p>
+                    :
+                    <>
+                        {renderCreatePageModal()}
+                        <button onClick={() => setCreateModal(true)}>Create Page</button>
+                    </>
             }
-            
+
         </Layout>
     )
 

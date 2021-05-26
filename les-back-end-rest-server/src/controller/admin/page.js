@@ -50,3 +50,11 @@ exports.getPage = (req, res) => {
     });
   }
 };
+
+
+exports.getAllPages = (req, res) => {
+  Page.find({}).exec((error, page) => {
+    if (error) return res.status(400).json({ error });
+    if (page) return res.status(200).json({ page });
+  })
+}

@@ -1,6 +1,7 @@
 const Category = require("../../models/category");
 const Product = require("../../models/product");
 const Order = require("../../models/order");
+const Page = require("../../models/page");
 
 function createCategories(categories, parentId = null) {
   const categoryList = [];
@@ -34,9 +35,11 @@ exports.initialData = async (req, res) => {
   const orders = await Order.find({})
     .populate("items.productId", "name")
     .exec();
+  const pages = await Page.find({}).exec();
   res.status(200).json({
     categories: createCategories(categories),
     products,
     orders,
+    pages,
   });
 };
