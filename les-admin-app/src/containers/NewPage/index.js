@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from '../../components/UI/Modal';
 import Layout from '../../components/Layout';
 import Input from '../../components/UI/Input';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Table } from 'react-bootstrap';
 import linearCategories from '../../helpers/linearCategories';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPage, getAllPages } from '../../actions';
@@ -187,21 +187,73 @@ const NewPage = (props) => {
         );
     }
 
+    const renderPages = () => {
+        return (
+            <Table style={{ fontSize: 12 }} responsive="sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {page.page.length > 0
+                        ? page.page.map((page) => (
+                            <tr key={page._id}>
+                                <td>2</td>
+                                <td>{page.title}</td>
+                                <td>{page.description}</td>
+                                <td>{page.category.name}</td>
+                                <td>
+                                    <button onClick={() => showPageDetailsModal(page)}>
+                                        info
+                        </button>
+                                    <button
+                                        onClick={() => {
+                                            // const payload = {
+                                            //     productId: product._id,
+                                            // };
+                                            // dispatch(deleteProductById(payload));
+                                        }}
+                                    >
+                                        del
+                        </button>
+                                </td>
+                            </tr>
+                        ))
+                        : null}
+                </tbody>
+            </Table>
+        );
+    };
+
+    const showPageDetailsModal = (product) => {
+        // setProductDetails(product);
+        // setProductDetailModal(true);
+    };
 
     return (
-        console.log("==========>" + page),
+        // console.log("==========>" + page),
         <Layout sidebar>
-            {
-                page.loading ?
-                    <p>Creating Page...please wait</p>
-                    :
-                    <>
-                        {renderCreatePageModal()}
-                        <button onClick={() => setCreateModal(true)}>Create Page</button>
-                    </>
-            }
 
-        </Layout>
+            <Container>
+                <Row>
+                    <Col md={12}>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <h3>Pages</h3>
+                            {<button onClick={() => setCreateModal(true)}>Create Page</button>}
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>{renderPages()}</Col>
+                </Row>
+            </Container>
+            {renderCreatePageModal()}
+        </Layout >
     )
 
 }

@@ -25,7 +25,7 @@ export const createPage = (form) => {
 
 export const getAllPages = async () => {
     console.log("getAllpages")
-    return async dispatch => {
+    return async (dispatch) => {
         dispatch({ type: pageConstants.GET_ALL_PAGES_REQUEST });
         try {
             const res = await axios.get('/page/all');

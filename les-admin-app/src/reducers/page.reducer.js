@@ -36,6 +36,7 @@ export default (state = initState, action) => {
         case pageConstants.GET_ALL_PAGES_SUCCESS:
             state = {
                 ...state,
+                page: action.payload.pages,
                 loading: false
             }
             break;
