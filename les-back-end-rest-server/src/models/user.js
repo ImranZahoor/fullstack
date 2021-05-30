@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    city: {
+      type: String
+    },
     hash_password: {
       type: String,
       required: true,
