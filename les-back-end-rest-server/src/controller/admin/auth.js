@@ -17,12 +17,13 @@ exports.signup = (req, res) => {
         role = "super-admin";
       }
 
-      const { firstName, lastName, email, password } = req.body;
+      const { firstName, lastName, email, password, city } = req.body;
       const hash_password = await bcrypt.hash(password, 10);
       const _user = new User({
         firstName,
         lastName,
         email,
+        city,
         hash_password,
         username: shortid.generate(),
         role,

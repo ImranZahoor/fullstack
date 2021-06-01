@@ -7,10 +7,10 @@ import {
   Modal,
   MaterialInput,
   MaterialButton,
-  DropdownMenu,
+  DropdownMenu
 } from "../MaterialUI";
 import { useDispatch, useSelector } from "react-redux";
-import { login, signout, getCartItems, signup as _signup } from "../../actions";
+import { login, signout, getCartItems, getCategoryByCity, signup as _signup } from "../../actions";
 import Cart from "../UI/Cart";
 
 /**
@@ -25,6 +25,7 @@ const Header = (props) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [city, setCity] = useState("");
   const [error, setError] = useState("");
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -33,12 +34,13 @@ const Header = (props) => {
   const cart = useSelector((state) => state.cart);
 
   const userSignup = () => {
-    const user = { firstName, lastName, email, password };
+    const user = { firstName, lastName, email, password, city };
     if (
       firstName === "" ||
       lastName === "" ||
       email === "" ||
-      password === ""
+      password === "" ||
+      city === ""
     ) {
       return;
     }
@@ -53,6 +55,10 @@ const Header = (props) => {
       dispatch(login({ email, password }));
     }
   };
+  const citySelected = (e) => {
+    const city = e.target.value;
+    dispatch(getCategoryByCity(city))
+  }
 
   const logout = () => {
     dispatch(signout());
@@ -92,51 +98,63 @@ const Header = (props) => {
       />
     );
   };
-
+  const renderCityList = () => {
+    return (
+      <select onChange={(e) => citySelected(e)}>
+        <option value="">Select City</option>
+        <option value="Lahore">Lahore</option>
+        <option value="Karachi">Karachi</option>
+        <option value="Sialkot">Sialkot</option>
+      </select>
+    )
+  }
   const renderNonLoggedInMenu = () => {
     return (
-      <DropdownMenu
-        menu={
-          <a
-            className="loginButton"
-            onClick={() => {
-              setSignup(false);
-              setLoginModal(true);
-            }}
-          >
-            Login
-          </a>
-        }
-        menus={[
-          { label: "My Profile", href: "", icon: null },
-          { label: "Flipkart Plus Zone", href: "", icon: null },
-          {
-            label: "Orders",
-            href: `/account/orders`,
-            icon: null,
-            onClick: () => {
-              !auth.authenticate && setLoginModal(true);
-            },
-          },
-          { label: "Wishlist", href: "", icon: null },
-          { label: "Rewards", href: "", icon: null },
-          { label: "Gift Cards", href: "", icon: null },
-        ]}
-        firstMenu={
-          <div className="firstmenu">
-            <span>New Customer?</span>
+      <>
+        {renderCityList()}
+        <DropdownMenu
+          menu={
             <a
+              className="loginButton"
               onClick={() => {
+                setSignup(false);
                 setLoginModal(true);
-                setSignup(true);
               }}
-              style={{ color: "#2874f0" }}
             >
-              Sign Up
+              Login
+          </a>
+          }
+          menus={[
+            { label: "My Profile", href: "", icon: null },
+            { label: "Flipkart Plus Zone", href: "", icon: null },
+            {
+              label: "Orders",
+              href: `/account/orders`,
+              icon: null,
+              onClick: () => {
+                !auth.authenticate && setLoginModal(true);
+              },
+            },
+            { label: "Wishlist", href: "", icon: null },
+            { label: "Rewards", href: "", icon: null },
+            { label: "Gift Cards", href: "", icon: null },
+          ]}
+          firstMenu={
+            <div className="firstmenu">
+              <span>New Customer?</span>
+              <a
+                onClick={() => {
+                  setLoginModal(true);
+                  setSignup(true);
+                }}
+                style={{ color: "#2874f0" }}
+              >
+                Sign Up
             </a>
-          </div>
-        }
-      />
+            </div>
+          }
+        />
+      </>
     );
   };
 
@@ -170,7 +188,12 @@ const Header = (props) => {
                     onChange={(e) => setLastName(e.target.value)}
                   />
                 )}
-
+                {
+                  signup && (
+                    <MaterialInput type="text" label="City" value={city}
+                      onChange={(e) => setCity(e.target.value)} />
+                  )
+                }
                 <MaterialInput
                   type="text"
                   label="Email/Mobile Number"
@@ -182,7 +205,7 @@ const Header = (props) => {
                   label="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  // rightElement={<a href="#">Forgot?</a>}
+                // rightElement={<a href="#">Forgot?</a>}
                 />
                 <MaterialButton
                   title={signup ? "Register" : "Login"}

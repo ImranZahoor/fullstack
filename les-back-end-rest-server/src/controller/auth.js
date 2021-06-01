@@ -16,12 +16,13 @@ exports.signup = (req, res) => {
         error: "User already registered",
       });
 
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, city } = req.body;
     const hash_password = await bcrypt.hash(password, 10);
     const _user = new User({
       firstName,
       lastName,
       email,
+      city,
       hash_password,
       username: shortid.generate(),
     });
@@ -38,7 +39,7 @@ exports.signup = (req, res) => {
         const { _id, firstName, lastName, email, role, fullName } = user;
         return res.status(201).json({
           token,
-          user: { _id, firstName, lastName, email, role, fullName },
+          user: { _id, firstName, lastName, email, city, role, fullName },
         });
       }
     });

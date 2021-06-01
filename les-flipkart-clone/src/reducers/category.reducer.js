@@ -10,7 +10,7 @@ const initState = {
 const buildNewCategories = (parentId, categories, category) => {
     let myCategories = [];
 
-    if(parentId == undefined){
+    if (parentId == undefined) {
         return [
             ...categories,
             {
@@ -21,10 +21,10 @@ const buildNewCategories = (parentId, categories, category) => {
             }
         ];
     }
-    
-    for(let cat of categories){
 
-        if(cat._id == parentId){
+    for (let cat of categories) {
+
+        if (cat._id == parentId) {
             myCategories.push({
                 ...cat,
                 children: cat.children ? buildNewCategories(parentId, [...cat.children, {
@@ -35,14 +35,14 @@ const buildNewCategories = (parentId, categories, category) => {
                     children: category.children
                 }], category) : []
             });
-        }else{
+        } else {
             myCategories.push({
                 ...cat,
                 children: cat.children ? buildNewCategories(parentId, cat.children, category) : []
             });
         }
 
-        
+
     }
 
 
@@ -51,8 +51,14 @@ const buildNewCategories = (parentId, categories, category) => {
 
 
 export default (state = initState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case categoryConstansts.GET_ALL_CATEGORIES_SUCCESS:
+            state = {
+                ...state,
+                categories: action.payload.categories
+            }
+            break;
+        case categoryConstansts.GET_CATEGORIES_BY_CITY_SUCCESS:
             state = {
                 ...state,
                 categories: action.payload.categories
@@ -68,7 +74,7 @@ export default (state = initState, action) => {
             const category = action.payload.category;
             const updatedCategories = buildNewCategories(category.parentId, state.categories, category);
             console.log('updated categoires', updatedCategories);
-            
+
             state = {
                 ...state,
                 categories: updatedCategories,

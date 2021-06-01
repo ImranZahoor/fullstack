@@ -15,6 +15,7 @@ import { useEffect } from "react";
 const Signup = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [city, setCity] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -27,6 +28,7 @@ const Signup = (props) => {
       setFirstName("");
       setLastName("");
       setEmail("");
+      setCity("");
       setPassword("");
     }
   }, [user.loading]);
@@ -38,6 +40,7 @@ const Signup = (props) => {
       firstName,
       lastName,
       email,
+      city,
       password,
     };
 
@@ -87,7 +90,13 @@ const Signup = (props) => {
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
               />
-
+              <Input
+                label="City"
+                placeholder="City"
+                value={city}
+                type="text"
+                onChange={(e) => setCity(e.target.value)}
+              />
               <Input
                 label="Password"
                 placeholder="Password"

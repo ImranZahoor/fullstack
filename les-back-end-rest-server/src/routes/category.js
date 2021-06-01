@@ -2,6 +2,7 @@ const express = require("express");
 const {
   addCategory,
   getCategories,
+  getCategoriesByCity,
   updateCategories,
   deleteCategories,
 } = require("../controller/category");
@@ -34,6 +35,8 @@ router.post(
   addCategory
 );
 router.get("/category/getcategory", getCategories);
+router.get("/category/getcategory/:city", getCategoriesByCity);
+
 router.post(
   "/category/update",
   requireSignin,
