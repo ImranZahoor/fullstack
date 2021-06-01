@@ -278,7 +278,7 @@ const Header = (props) => {
             }
             menus={[
               { label: "Notification Preference", href: "", icon: null },
-              { label: "Sell on flipkart", href: "", icon: null },
+              { label: "Sell on flipkart", href: `/sell/products`, icon: null },
               { label: "24x7 Customer Care", href: "", icon: null },
               { label: "Advertise", href: "", icon: null },
               { label: "Download App", href: "", icon: null },

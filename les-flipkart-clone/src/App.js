@@ -10,6 +10,7 @@ import CartPage from "./containers/CartPage";
 import CheckoutPage from "./containers/CheckoutPage";
 import OrderPage from "./containers/OrderPage";
 import OrderDetailsPage from "./containers/OrderDetailsPage";
+import SellerProducts from "./containers/Seller/Products";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function App() {
             component={ProductDetailsPage}
           />
           <Route path="/:slug" component={ProductListPage} />
+          <Route path="/sell/products" component={SellerProducts}/>
         </Switch>
       </Router>
     </div>

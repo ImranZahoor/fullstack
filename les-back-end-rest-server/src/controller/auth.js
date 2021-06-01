@@ -36,7 +36,7 @@ exports.signup = (req, res) => {
 
       if (user) {
         const token = generateJwtToken(user._id, user.role);
-        const { _id, firstName, lastName, email, role, fullName } = user;
+        const { _id, firstName, lastName, email,city, role, fullName } = user;
         return res.status(201).json({
           token,
           user: { _id, firstName, lastName, email, city, role, fullName },
@@ -58,10 +58,10 @@ exports.signin = (req, res) => {
         //   { expiresIn: "1d" }
         // );
         const token = generateJwtToken(user._id, user.role);
-        const { _id, firstName, lastName, email, role, fullName } = user;
+        const { _id, firstName, lastName, email,city, role, fullName } = user;
         res.status(200).json({
           token,
-          user: { _id, firstName, lastName, email, role, fullName },
+          user: { _id, firstName, lastName, email,city, role, fullName },
         });
       } else {
         return res.status(400).json({
